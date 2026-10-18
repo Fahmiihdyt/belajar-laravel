@@ -23,8 +23,13 @@ class BookController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:9999',
+            'author' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\pL\s.\'-]+$/u',
+            ],
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
             'stock' => 'required|integer|min:0',
         ]);
 
@@ -53,8 +58,13 @@ class BookController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'year' => 'required|integer|min:1000|max:9999',
+            'author' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\pL\s.\'-]+$/u',
+            ],
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
             'stock' => 'required|integer|min:0',
         ]);
 
