@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('category')->get();
 
         return view('books.index', compact('books'));
     }
 
     public function create()
     {
-        return view('books.create');
+        $tittle = "Tambah Buku";
+        $categories = Category::orderBy('name')->get();
+
+        return view('books.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -31,6 +35,7 @@ class BookController extends Controller
             ],
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         Book::create($validated);
@@ -42,7 +47,7 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::with('category')->findOrFail($id);
 
         return view('books.show', compact('book'));
     }
@@ -50,8 +55,9 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::findOrFail($id);
+        $categories = Category::orderBy('name')->get();
 
-        return view('books.edit', compact('book'));
+        return view('books.edit', compact('book', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -66,6 +72,7 @@ class BookController extends Controller
             ],
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $book = Book::findOrFail($id);

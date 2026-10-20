@@ -30,6 +30,22 @@
         <label>Stok</label><br>
         <input type="number" name="stock" value="{{ old('stock') }}"><br><br>
 
+        <label>Kategori Buku</label><br>
+        <select name="category_id" required>
+            <option value="">Pilih Kategori</option>
+
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    @selected(old('category_id') == $category->id)>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select><br><br>
+
+        @error('category_id')
+            <p>{{ $message }}</p>
+        @enderror
+
         <button type="submit">Simpan Buku</button>
     </form>
 
@@ -37,3 +53,4 @@
     <a href="{{ route('books.index') }}">Kembali ke Daftar Buku</a>
 </body>
 </html>
+```
