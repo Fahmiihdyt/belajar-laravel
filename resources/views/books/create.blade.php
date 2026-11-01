@@ -1,4 +1,3 @@
-```php
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,4 +52,3 @@
     <a href="{{ route('books.index') }}">Kembali ke Daftar Buku</a>
 </body>
 </html>
-```
