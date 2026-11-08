@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
@@ -86,6 +87,7 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
+        Gate::authorize('delete', $book);
         $book->delete();
 
         return redirect()
