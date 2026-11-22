@@ -78,6 +78,7 @@
             <a href="/books">Books</a>
             <a href="/categories">Categories</a>
             <a href="/members">Members</a>
+            <a href="{{ route('borrowings.index') }}">Peminjaman</a>
             @can('manage-users')
                 <a href='/users'>Users</a>
             @endcan
